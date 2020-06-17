@@ -1,0 +1,55 @@
+body {
+  height: 95vh;
+  width: 95;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color:rgb(44, 139, 44);
+  background: rgb(143, 151, 121);
+}
+
+h1{
+  color: black;
+}
+
+.game{
+  display: flex;
+  align-items: center;
+}
+
+#tips{
+  animation: blinker 2s linear infinite;
+  color: greenyellow;
+  font-size: 20px;
+}
+
+#restart{
+  display: none;
+  animation: blinker 2s linear infinite;
+  font-size: 25px;
+  margin-top: 20px;  
+  color: greenyellow;
+}
+
+@keyframes blinker {  
+  50% { opacity: 0; }
+}
+
+#endGame{
+  height: 25vh;
+  width: 25vh;
+  background: blue;
+  z-index:2;
+  position: absolute;
+  
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#endGame p{
+  font-size: 25px;
+  color: #7EF9FF;
+}

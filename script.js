@@ -7,6 +7,9 @@ let food = {
   x: Math.floor(Math.random() * 15 + 1) * box,
   y: Math.floor(Math.random() * 15 + 1) * box
 }
+let points = 0;
+
+let gameState = 1;
 
 snake[0] = {
   x: 8 * box,
@@ -33,8 +36,10 @@ function drawFood(){
 
 document.addEventListener('keydown', update);
 
-function update(event){
-  console.log(event.keyCode);
+function update(event){    
+  
+  document.getElementById('tips').style.display = 'none';
+
   if(event.keyCode === 37 && direction != "right")
     direction = "left";
 
@@ -47,9 +52,24 @@ function update(event){
   if(event.keyCode === 38 && direction != "down")
     direction = "down";
 
+  if (event.keyCode === 13){
+    if(!gameState){      
+      gameState = 1;
+      location.reload();
+      snake = [];
+      snake[0] = {
+        x: 8 * box,
+        y: 8 * box
+      }      
+      document.getElementById('endGame').style.display = 'none';
+    }    
+  }
+    
+
 }
 
 function startGame(){
+  console.log(points);
   if(snake[0].x > 15 * box && direction === "right")
     snake[0].x = 0;
 
@@ -62,6 +82,18 @@ function startGame(){
 
   if(snake[0].y < 0 && direction === "down")
     snake[0].y = 16 * box;    
+  
+  for (let i = 1; i < snake.length; i++) {
+    if(snake[0].x == snake[i].x &&
+      snake[0].y == snake[i].y
+      ){
+        gameState = 0;
+        document.getElementById('endGame').style.display = 'flex';        
+        document.getElementById("restart").style.display = 'block';
+        clearInterval(game);                
+    }
+    
+  }
 
   createBG();
   createSnake();
@@ -69,7 +101,7 @@ function startGame(){
 
   let snakeX = snake[0].x;
   let snakeY = snake[0].y;
-  //console.log(snakeY);
+  
   if(direction == "right") 
     snakeX += box;
   if(direction == "left") 
@@ -84,9 +116,8 @@ function startGame(){
   }else{
     food.x = Math.floor(Math.random() * 15 + 1) * box;
     food.y = Math.floor(Math.random() * 15 + 1) * box;    
+    points++;
   }
-
-  //snake.pop();
 
   let newHead = {
     x: snakeX,
